@@ -118,6 +118,7 @@ def summary(
                     "num_params",
                     "kernel_size",
                     "mult_adds",
+                    "params_dtype"
                 )
                 Default: ("output_size", "num_params")
                 If input_data / input_size are not provided, only "num_params" is used.
@@ -464,6 +465,7 @@ def apply_hooks(
         del module
         info.input_size = info.calculate_size(inputs, batch_dim)
         info.output_size = info.calculate_size(outputs, batch_dim)
+        info.get_dtypes()
         info.executed = True
         info.calculate_macs()
 

@@ -12,6 +12,7 @@ ALL_COLUMN_SETTINGS = (
     "output_size",
     "num_params",
     "mult_adds",
+    "params_dtype",
 )
 HEADER_TITLES = {
     "kernel_size": "Kernel Shape",
@@ -19,6 +20,7 @@ HEADER_TITLES = {
     "output_size": "Output Shape",
     "num_params": "Param #",
     "mult_adds": "Mult-Adds",
+    "params_dtype": "Param Dtype",
 }
 
 
@@ -122,6 +124,7 @@ class FormattingOptions:
             "output_size": self.str_(layer_info.output_size),
             "num_params": layer_info.num_params_to_str(reached_max_depth),
             "mult_adds": layer_info.macs_to_str(reached_max_depth, children_layers),
+            "params_dtype": layer_info.dtypes_to_str()
         }
         start_str = self.get_start_str(layer_info.depth)
         layer_name = layer_info.get_layer_name(self.show_var_name, self.show_depth)

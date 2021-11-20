@@ -1,5 +1,5 @@
 """ layer_info.py """
-from typing import Any, Dict, Iterable, List, Optional, Sequence, Union
+from typing import Any, Dict, Iterable, List, Optional, Sequence, Union, Set
 
 import torch
 from torch import nn
@@ -44,6 +44,7 @@ class LayerInfo:
         self.input_size: List[int] = []
         self.output_size: List[int] = []
         self.kernel_size: List[int] = []
+        self.dtypes: Set[str] = set()
         self.num_params = 0
         self.macs = 0
 
@@ -197,6 +198,12 @@ class LayerInfo:
             return param_count_str if self.trainable else f"({param_count_str})"
         return "--"
 
+    def get_dtypes(self):
+        for name, param in self.module.named_parameters():
+            self.dtypes.add(str(param.dtype).replace('torch.', ''))
+    
+    def dtypes_to_str(self):
+        return ''.join(sorted(self.dtypes))
 
 def prod(num_list: Union[Iterable[int], torch.Size]) -> int:
     result = 1
